@@ -1,0 +1,10 @@
+.ItemList {
+  width: 100vw;
+  display: flex;
+  list-style: none;
+}
+
+.Items {
+  background-color: rgb(124, 148, 245);
+  border-radius: 20px;
+}

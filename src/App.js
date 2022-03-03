@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { InitialItems } from './components/data';
+import List from './components/List';
+import AddItem from './components/AddItem';
 
 function App() {
+  const [items, setItems] = useState(InitialItems);
+
+  function handleDeleteItem(itemId) {
+    setItems(items.filter((item) => item._id !== itemId));
+  }
+
+  function handleAddItem() {
+    return console.log('hello');
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Shopping List</h1>
+      <List InitialItems={items} onDeleteItem={handleDeleteItem} />
+      <AddItem onAddItem={handleAddItem} />
     </div>
   );
 }
