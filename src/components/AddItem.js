@@ -1,11 +1,23 @@
-export default function AddItem(onAddItem) {
+import { useState } from 'react';
+
+export default function AddItem({ onAddItem }) {
+  const [name, setName] = useState('');
   return (
-    <form>
-      <label for="add" hidden>
-        add item
-      </label>
-      <input id="add" placeholder="add item"></input>
-      <button onClick={console.log(onAddItem)}>Add</button>
-    </form>
+    <>
+      <input
+        id="add"
+        placeholder="add item"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+      />
+      <button
+        onClick={() => {
+          setName('');
+          onAddItem(name);
+        }}
+      >
+        Add
+      </button>
+    </>
   );
 }
