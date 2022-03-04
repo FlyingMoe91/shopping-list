@@ -1,19 +1,35 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import './App.css';
-import { InitialItems } from './components/data';
+// import { InitialItems } from './components/data';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import SearchAdd from './components/SearchAdd';
 
 function App() {
-  const [items, setItems] = useState(loadFromLocal('items') ?? InitialItems);
-  const [fetchItems, setFetchItems] = useState([]);
+  //const [items, setItems] = useState(loadFromLocal('items') ?? InitialItems);
+  const [items, setItems] = useState(loadFromLocal('items') ?? []);
 
   useEffect(() => {
-    //loadItems();
-    async function loadItems() {}
-  });
+    loadItems();
+    async function loadItems() {
+      try {
+        const response = await fetch(
+          'https://fetch-me.vercel.app/api/shopping/items'
+        );
+        const data = await response.json();
+        setItems(data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, []);
+  console.log(items);
+  // function handleSearchItems() {
+  //   setApiItems(
+  //     setApiItems()
+  //     )
+  // }
 
   useEffect(() => {
     saveToLocal('items', items);
