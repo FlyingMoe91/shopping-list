@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 import './App.css';
 import { InitialItems } from './components/data';
 import List from './components/List';
 import AddItem from './components/AddItem';
-import { nanoid } from 'nanoid';
+import SearchAdd from './components/SearchAdd';
 
 function App() {
   const [items, setItems] = useState(loadFromLocal('items') ?? InitialItems);
+  const [fetchItems, setFetchItems] = useState([]);
+
+  useEffect(() => {
+    //loadItems();
+    async function loadItems() {}
+  });
 
   useEffect(() => {
     saveToLocal('items', items);
@@ -45,6 +52,7 @@ function App() {
       <h1>Shopping List</h1>
       <List InitialItems={items} onDeleteItem={handleDeleteItem} />
       <AddItem onAddItem={handleAddItem} />
+      <SearchAdd />
     </div>
   );
 }
