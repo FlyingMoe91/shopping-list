@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { InitialItems } from './components/data';
 import List from './components/List';
@@ -7,7 +7,23 @@ import AddItem from './components/AddItem';
 let nextId = 6;
 
 function App() {
-  const [items, setItems] = useState(InitialItems);
+  const [items, setItems] = useState(loadFromLocal('items') ?? InitialItems);
+
+  useEffect(() => {
+    saveToLocal('items', items);
+  }, [items]);
+
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function saveToLocal(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 
   function handleDeleteItem(itemId) {
     setItems(items.filter((item) => item._id !== itemId));
