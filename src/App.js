@@ -24,12 +24,10 @@ function App() {
       }
     }
   }, []);
-  console.log(items);
-  // function handleSearchItems() {
-  //   setApiItems(
-  //     setApiItems()
-  //     )
-  // }
+
+  function handleSearchItems(itemName) {
+    setItems(items.filter((item) => item.name.en.match(itemName)));
+  }
 
   useEffect(() => {
     saveToLocal('items', items);
@@ -68,7 +66,7 @@ function App() {
       <h1>Shopping List</h1>
       <List InitialItems={items} onDeleteItem={handleDeleteItem} />
       <AddItem onAddItem={handleAddItem} />
-      <SearchAdd />
+      <SearchAdd InitialItems={items} onSearchItems={handleSearchItems} />
     </div>
   );
 }
