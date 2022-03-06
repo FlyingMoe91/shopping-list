@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-export default function SearchAdd({ InitialItems, onSearchItems }) {
-  const [searchItems, setSearchItems] = useState('');
+export default function SearchAdd({ InitialItems, onAddItem }) {
+  const [searchInput, setSearchInput] = useState('');
   return (
     <div>
       <label htmlFor="search">What do you want to buy?</label>
@@ -9,18 +9,26 @@ export default function SearchAdd({ InitialItems, onSearchItems }) {
         placeholder="Search"
         type="text"
         id="search"
-        onChange={(event) => setSearchItems(event.target.value)}
+        onChange={(event) => setSearchInput(event.target.value)}
       />
       <ul>
-        {InitialItems.filter((item) =>
-          item.name.en.toLowerCase().includes(searchItems.toLowerCase())
-        ).map((item) => {
-          return (
-            <li key={item._id}>
-              <button className="Items">{item.name.en}</button>
-            </li>
-          );
-        })}
+        {searchInput &&
+          InitialItems.filter((item) =>
+            item.name.en.toLowerCase().includes(searchInput.toLowerCase())
+          ).map((item) => {
+            return (
+              <li key={item._id}>
+                <button
+                  onClick={() => {
+                    onAddItem(item);
+                  }}
+                  className="Items"
+                >
+                  {item.name.en}
+                </button>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

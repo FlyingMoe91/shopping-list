@@ -1,9 +1,9 @@
 import './List.css';
 
-export default function List({ InitialItems, onDeleteItem }) {
+export default function List({ shoppingListItem, onDeleteItem }) {
   return (
     <ul className="ItemList">
-      {InitialItems.map((item) => {
+      {shoppingListItem.map((item) => {
         return (
           <li key={item._id}>
             <button onClick={() => onDeleteItem(item._id)} className="Items">

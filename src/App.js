@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
 import './App.css';
 import List from './components/List';
-import AddItem from './components/AddItem';
+// import AddItem from './components/AddItem';
 import SearchAdd from './components/SearchAdd';
 
 function App() {
   const [items, setItems] = useState([]);
+  const [shoppingListItem, setShoppingListItem] = useState(
+    loadFromLocal('items') ?? []
+  );
 
   useEffect(() => {
     loadItems();
@@ -24,33 +26,33 @@ function App() {
   }, []);
 
   useEffect(() => {
-    saveToLocal('items', items);
-  }, [items]);
+    saveToLocal('items', shoppingListItem);
+  }, [shoppingListItem]);
 
-  // function loadFromLocal(key) {
-  //   try {
-  //     return JSON.parse(localStorage.getItem(key));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  function loadFromLocal(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function saveToLocal(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
   function handleDeleteItem(itemId) {
-    setItems(items.filter((item) => item._id !== itemId));
+    setShoppingListItem(shoppingListItem.filter((item) => item._id !== itemId));
   }
 
   function handleAddItem(name) {
-    setItems([
-      ...items,
+    setShoppingListItem([
+      ...shoppingListItem,
       {
-        _id: nanoid(),
-        _type: 'shopping.item',
-        category: { _type: 'ref', _ref: 'c2hvcHBpbmcuY2F0ZWdvcnk6MA==' },
-        name: { en: name, de: '' },
+        _id: name._id,
+        _type: name._type,
+        category: { _type: name.category._type, _ref: name.category._ref },
+        name: { en: name.name.en, de: name.name.de },
       },
     ]);
   }
@@ -58,9 +60,12 @@ function App() {
   return (
     <div className="App">
       <h1>Shopping List</h1>
-      <List InitialItems={items} onDeleteItem={handleDeleteItem} />
-      <AddItem onAddItem={handleAddItem} />
-      <SearchAdd InitialItems={items} />
+      <List
+        shoppingListItem={shoppingListItem}
+        onDeleteItem={handleDeleteItem}
+      />
+      {/* <AddItem onAddItem={handleAddItem} /> */}
+      <SearchAdd InitialItems={items} onAddItem={handleAddItem} />
     </div>
   );
 }
