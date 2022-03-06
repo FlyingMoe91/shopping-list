@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import './App.css';
-// import { InitialItems } from './components/data';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import SearchAdd from './components/SearchAdd';
 
 function App() {
-  //const [items, setItems] = useState(loadFromLocal('items') ?? InitialItems);
-  const [items, setItems] = useState(loadFromLocal('items') ?? []);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     loadItems();
@@ -25,21 +23,17 @@ function App() {
     }
   }, []);
 
-  function handleSearchItems(itemName) {
-    setItems(items.filter((item) => item.name.en.match(itemName)));
-  }
-
   useEffect(() => {
     saveToLocal('items', items);
   }, [items]);
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // function loadFromLocal(key) {
+  //   try {
+  //     return JSON.parse(localStorage.getItem(key));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   function saveToLocal(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
@@ -66,7 +60,7 @@ function App() {
       <h1>Shopping List</h1>
       <List InitialItems={items} onDeleteItem={handleDeleteItem} />
       <AddItem onAddItem={handleAddItem} />
-      <SearchAdd InitialItems={items} onSearchItems={handleSearchItems} />
+      <SearchAdd InitialItems={items} />
     </div>
   );
 }
