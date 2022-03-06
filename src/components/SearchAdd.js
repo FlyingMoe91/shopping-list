@@ -1,17 +1,25 @@
-import { useState } from 'react';
+import './SearchAdd.css';
 
-export default function SearchAdd({ InitialItems, onAddItem }) {
-  const [searchInput, setSearchInput] = useState('');
+export default function SearchAdd({
+  InitialItems,
+  onAddItem,
+  setSearchInput,
+  searchInput,
+}) {
   return (
     <div>
-      <label htmlFor="search">What do you want to buy?</label>
+      <label className="searchLabel" htmlFor="search">
+        What do you want to buy?
+      </label>
       <input
+        className="searchInput"
         placeholder="Search"
         type="text"
         id="search"
+        value={searchInput}
         onChange={(event) => setSearchInput(event.target.value)}
       />
-      <ul>
+      <ul className="searchList">
         {searchInput &&
           InitialItems.filter((item) =>
             item.name.en.toLowerCase().includes(searchInput.toLowerCase())
@@ -22,7 +30,7 @@ export default function SearchAdd({ InitialItems, onAddItem }) {
                   onClick={() => {
                     onAddItem(item);
                   }}
-                  className="Items"
+                  className="searchItems"
                 >
                   {item.name.en}
                 </button>

@@ -1,0 +1,26 @@
+.searchLabel {
+  color: rgb(142, 52, 73);
+}
+
+.searchInput {
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+}
+
+.searchList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 375px;
+}
+
+.searchItems {
+  background-color: rgb(146, 64, 240);
+  color: bisque;
+  border-radius: 10px;
+  padding: 4px;
+  margin: 2px;
+}

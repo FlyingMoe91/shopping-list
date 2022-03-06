@@ -1,3 +1,13 @@
 .App {
   text-align: center;
+  height: 100vh;
+  border: 3px solid rgb(167, 87, 87);
+  border-radius: 15px;
+  margin: 5px;
+  background-color: rgb(220, 144, 217);
+}
+
+.Headline {
+  color: rgb(220, 67, 67);
+  margin: 30px;
 }

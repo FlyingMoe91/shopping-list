@@ -1,10 +1,18 @@
 .ItemList {
   width: 100vw;
+  min-height: 20vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
   list-style: none;
+  padding: 0;
 }
 
 .Items {
-  background-color: rgb(124, 148, 245);
-  border-radius: 20px;
+  background-color: rgb(177, 96, 227);
+  border-radius: 10px;
+  color: bisque;
+  padding: 4px;
 }

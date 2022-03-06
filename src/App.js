@@ -9,6 +9,7 @@ function App() {
   const [shoppingListItem, setShoppingListItem] = useState(
     loadFromLocal('items') ?? []
   );
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     loadItems();
@@ -46,26 +47,37 @@ function App() {
   }
 
   function handleAddItem(name) {
-    setShoppingListItem([
-      ...shoppingListItem,
-      {
-        _id: name._id,
-        _type: name._type,
-        category: { _type: name.category._type, _ref: name.category._ref },
-        name: { en: name.name.en, de: name.name.de },
-      },
-    ]);
+    if (shoppingListItem.map((item) => item._id).includes(name._id)) {
+      alert(`${name.name.en} is already on the list`);
+      setSearchInput('');
+    } else {
+      setShoppingListItem([
+        ...shoppingListItem,
+        {
+          _id: name._id,
+          _type: name._type,
+          category: { _type: name.category._type, _ref: name.category._ref },
+          name: { en: name.name.en, de: name.name.de },
+        },
+      ]);
+      setSearchInput('');
+    }
   }
 
   return (
     <div className="App">
-      <h1>Shopping List</h1>
+      <h1 className="Headline">Shopping List</h1>
       <List
         shoppingListItem={shoppingListItem}
         onDeleteItem={handleDeleteItem}
       />
       {/* <AddItem onAddItem={handleAddItem} /> */}
-      <SearchAdd InitialItems={items} onAddItem={handleAddItem} />
+      <SearchAdd
+        setSearchInput={setSearchInput}
+        searchInput={searchInput}
+        InitialItems={items}
+        onAddItem={handleAddItem}
+      />
     </div>
   );
 }
