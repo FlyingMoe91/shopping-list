@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { loadFromLocal, saveToLocal } from './lib/localStorage';
 import './App.css';
 import List from './components/List';
 // import AddItem from './components/AddItem';
@@ -30,56 +31,37 @@ function App() {
     saveToLocal('items', shoppingListItem);
   }, [shoppingListItem]);
 
-  function loadFromLocal(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  function saveToLocal(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  function handleDeleteItem(itemId) {
-    setShoppingListItem(shoppingListItem.filter((item) => item._id !== itemId));
-  }
-
-  function handleAddItem(name) {
-    if (shoppingListItem.map((item) => item._id).includes(name._id)) {
-      alert(`${name.name.en} is already on the list`);
-      setSearchInput('');
-    } else {
-      setShoppingListItem([
-        ...shoppingListItem,
-        {
-          _id: name._id,
-          _type: name._type,
-          category: { _type: name.category._type, _ref: name.category._ref },
-          name: { en: name.name.en, de: name.name.de },
-        },
-      ]);
-      setSearchInput('');
-    }
-  }
-
   return (
     <div className="App">
       <h1 className="Headline">Shopping List</h1>
-      <List
-        shoppingListItem={shoppingListItem}
-        onDeleteItem={handleDeleteItem}
-      />
+      <List shoppingListItem={shoppingListItem} onDeleteItem={DeleteItem} />
       {/* <AddItem onAddItem={handleAddItem} /> */}
       <SearchAdd
-        setSearchInput={setSearchInput}
+        onSearch={handleSearch}
         searchInput={searchInput}
         InitialItems={items}
-        onAddItem={handleAddItem}
+        onAddItem={AddItem}
       />
     </div>
   );
+
+  function handleSearch(title) {
+    setSearchInput(title);
+  }
+
+  function DeleteItem(itemId) {
+    setShoppingListItem(shoppingListItem.filter((item) => item._id !== itemId));
+  }
+
+  function AddItem(name) {
+    if (shoppingListItem.find((item) => item._id === name._id)) {
+      alert(`${name.name.en} is already on the list`);
+      setSearchInput('');
+    } else {
+      setShoppingListItem([...shoppingListItem, name]);
+      setSearchInput('');
+    }
+  }
 }
 
 export default App;

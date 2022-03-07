@@ -1,3 +1,9 @@
+.SearchAddContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .searchLabel {
   color: rgb(142, 52, 73);
 }
@@ -6,6 +12,7 @@
   border-radius: 10px;
   text-align: center;
   margin: 10px;
+  width: 250px;
 }
 
 .searchList {

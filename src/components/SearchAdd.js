@@ -3,11 +3,15 @@ import './SearchAdd.css';
 export default function SearchAdd({
   InitialItems,
   onAddItem,
-  setSearchInput,
+  onSearch,
   searchInput,
 }) {
+  const filteredItems = InitialItems.filter((item) =>
+    item.name.en.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   return (
-    <div>
+    <div className="SearchAddContainer">
       <label className="searchLabel" htmlFor="search">
         What do you want to buy?
       </label>
@@ -17,13 +21,11 @@ export default function SearchAdd({
         type="text"
         id="search"
         value={searchInput}
-        onChange={(event) => setSearchInput(event.target.value)}
+        onChange={(event) => onSearch(event.target.value)}
       />
       <ul className="searchList">
         {searchInput &&
-          InitialItems.filter((item) =>
-            item.name.en.toLowerCase().includes(searchInput.toLowerCase())
-          ).map((item) => {
+          filteredItems.map((item) => {
             return (
               <li key={item._id}>
                 <button
