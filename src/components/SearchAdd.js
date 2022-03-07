@@ -27,6 +27,7 @@ export default function SearchAdd({
         {searchInput &&
           filteredItems.map((item) => {
             return (
+              //     searchInput.name.includes(!)
               <li key={item._id}>
                 <button
                   onClick={() => {
